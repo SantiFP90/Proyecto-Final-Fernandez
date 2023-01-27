@@ -129,23 +129,23 @@ const verCarrito = () => {
     carritoTeclados.innerHTML = `
     <div>
       <hr>
-      <img src="${img}" alt="Teclado número: ${id}">
+      <img src="${img}" alt="Teclado número:${id}">
       <p>${nombre}</p>
       <p> $ ${precio}</p>
+      <p class="quitar" >Quitar</p>
       <hr>
     </div>
     `;
 
     //QUITAR TECLADO DEL CARRITO
-    let quitar = document.createElement("p");
-    quitar.innerText = "Quitar";
-    quitar.classList.add("quitar");
-    carritoTeclados.appendChild(quitar);
-
-    quitar.addEventListener("click", eliminarProducto);
+    let quitar = carritoTeclados.querySelector(".quitar");
+    quitar.addEventListener("click", ()=>{
+      eliminarProducto(id)
+    });
 
     //AGREGAR PRODUCTOS AL CONTENEDOR
     contCarrito.append(carritoTeclados);
+
   });
 
   //TOTAL DEBAJO
@@ -167,9 +167,9 @@ const verCarrito = () => {
 
 carritoCompras.addEventListener("click", verCarrito);
 
-const eliminarProducto = () => {
-  const eProducto = carrito.find((teclado) => teclado.id);
-
+const eliminarProducto = (id) => {
+  const eProducto = carrito.find((teclado) => teclado.id === id);
+  console.log(eProducto)
   carrito = carrito.filter((carritoFiltrado) => {
     return carritoFiltrado !== eProducto;
   });
