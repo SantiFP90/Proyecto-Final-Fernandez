@@ -255,6 +255,10 @@ button:hover::after {
   font-size: 1.2rem;
 }
 
+.cantidadProductosStyle {
+  color: red;
+}
+
 /* Flecha subir */
 .fa-circle-up {
   font-size: 2em;
@@ -277,11 +281,18 @@ button:hover::after {
 }
 
 /* BOTONES ORDEN DE PRECIOS */
-.btnPreciosContainer{
+.btnPreciosContainer {
   display: flex;
   justify-content: center;
 }
-.btnPrecios{
+.btnPrecios {
   margin: 5px;
   width: 300px;
+}
+
+.btnFiltros {
+  margin: 5px;
+  width: 300px;
+  color: red;
+  background-color: red;
 }

@@ -4,22 +4,61 @@ const contCarrito = document.getElementById("contCarrito");
 const gAlta = document.getElementById("gAlta");
 const gMedia = document.getElementById("gMedia");
 const gBaja = document.getElementById("gBaja");
+const qFiltros = document.getElementById("qFiltros");
 
 let teclados = [];
 
-let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+const borrarProductos = () => {
+  contenedorCards.innerHTML = " ";
+};
+
+const alta = () => {
+  teclados = teclados.filter((teclados) => {
+    return teclados.gama === "alta";
+  });
+};
+
+const media = () => {
+  teclados = teclados.filter((teclados) => {
+    return teclados.gama === "media";
+  });
+};
+
+const baja = () => {
+  teclados = teclados.filter((teclados) => {
+    return teclados.gama === "baja";
+  });
+};
+
+const qFiltro = () => {
+  borrarProductos();
+  fetchFunction();
+};
+
+qFiltros.addEventListener("click", qFiltro);
+
+gAlta.addEventListener("click", () => {
+  borrarProductos();
+  alta();
+  cargaTeclados();
+});
+
+gMedia.addEventListener("click", () => {
+  borrarProductos();
+  media();
+  cargaTeclados();
+});
+
+gBaja.addEventListener("click", () => {
+  borrarProductos();
+  baja();
+  cargaTeclados();
+});
 
 //AGREGAR PRODUCTOS A LA PAGINA
 cargaTeclados = () => {
-
-  // baja()
-
-  // media()
-
-  // gAlta.addEventListener("click", ()=>{
-  //   alta()
-  // })
-
   teclados.forEach((teclado) => {
     const { id, img, nombre, precio } = teclado;
     let card = document.createElement("div");
@@ -36,7 +75,6 @@ cargaTeclados = () => {
     let añadirCarrito = document.createElement("button");
     añadirCarrito.innerText = "Añadir Carrito";
     card.append(añadirCarrito);
-    
 
     //AGREGAR PRODUCTOS AL CARRITO
     añadirCarrito.addEventListener("click", () => {
@@ -46,23 +84,19 @@ cargaTeclados = () => {
         nombre: nombre,
         precio: precio,
       });
-      guardarEnLocal()
+      guardarEnLocal();
       Toastify({
         text: "Añadido al carrito! :)",
         duration: 3000,
-        gravity: 'bottom',
-        position: 'left',
-        style:{
-          background:"rgba(52, 205, 52, 0.558)",
-        }
-        }).showToast();
+        gravity: "bottom",
+        position: "left",
+        style: {
+          background: "rgba(52, 205, 52, 0.558)",
+        },
+      }).showToast();
     });
-  })
+  });
 };
-
-  gAlta.addEventListener("click", ()=>{
-    alta()
-  })
 
 const verCarrito = () => {
   //CONTENEDOR DEL CARRITO
@@ -95,7 +129,6 @@ const verCarrito = () => {
   contCarrito.append(carritoCargadoHeader);
 
   //CARGA DE LOS PRODUCTOS
-
   carrito.forEach((teclado) => {
     const { id, img, nombre, precio } = teclado;
     let carritoTeclados = document.createElement("div");
@@ -113,22 +146,25 @@ const verCarrito = () => {
 
     //QUITAR TECLADO DEL CARRITO
     let quitar = carritoTeclados.querySelector(".quitar");
-    quitar.addEventListener("click", ()=>{
-      eliminarProducto(id)
+    quitar.addEventListener("click", () => {
+      eliminarProducto(id);
       Toastify({
         text: "Eliminado del carrito! :(",
         duration: 3000,
-        gravity: 'bottom',
-        position: 'left',
-        style:{
-          background:"rgba(205, 52, 52, 0.558)",
-        }
-        }).showToast();
+        gravity: "bottom",
+        position: "left",
+        style: {
+          background: "rgba(205, 52, 52, 0.558)",
+        },
+      }).showToast();
+      let cantidadProductos = document.createElement("p");
+      cantidadProductos.innerText = `Cantidad de productos: ${carrito.length}`;
+      contCarrito.append(cantidadProductos);
+      estaVacio();
     });
 
     //AGREGAR PRODUCTOS AL CONTENEDOR
     contCarrito.append(carritoTeclados);
-
   });
 
   //TOTAL DEBAJO
@@ -144,28 +180,22 @@ const verCarrito = () => {
   const vaciar = document.createElement("p");
   vaciar.classList.add("vaciarCarrito");
   vaciar.innerText = "Vaciar carrito";
-  vaciar.addEventListener("click", ()=>{
+  vaciar.addEventListener("click", () => {
     Swal.fire({
-      title: '¿Quieres vaciar el carrito?',
+      title: "¿Quieres vaciar el carrito?",
       text: "Perderas todos los productos!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#4e3d61',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Acpetar'
+      confirmButtonColor: "#4e3d61",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Acpetar",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Operacion cancelada.',
-          '¡Caritto vacio!',
-          'success',
-        )
-        vaciarCarrito()
+        Swal.fire("Operacion cancelada.", "¡Caritto vacio!", "success");
+        vaciarCarrito();
         contCarrito.style.display = "none";
       }
-    })
-    // vaciarCarrito()
-    // contCarrito.style.display = "none";
+    });
   });
   contCarrito.append(vaciar);
 };
@@ -184,37 +214,33 @@ const eliminarProducto = (id) => {
 
 const vaciarCarrito = () => {
   carrito.splice(0, carrito.length);
-  localStorage.removeItem('carrito')
+  localStorage.removeItem("carrito");
   verCarrito();
 };
 
-const alta = () => {
-  teclados = teclados.filter((teclados) => {
-    return teclados.gama === "alta"
-  });
-}
-const media = () => {
-  teclados = teclados.filter((teclados) => {
-    return teclados.gama === "media"
-  });
-}
-const baja = () => {
-  teclados = teclados.filter((teclados) => {
-    return teclados.gama === "baja"
-  });
-}
-
+const estaVacio = () => {
+  if (carrito.length === 0) {
+    vaciarCarrito();
+    contCarrito.style.display = "none";
+  } else {
+    console.log("xd");
+    cantidadProductos.classList.add("cantidadProductosStyle");
+  }
+};
 
 //LocalStorage
-const guardarEnLocal = () =>{
-  localStorage.setItem('carrito', JSON.stringify(carrito))
-}
+const guardarEnLocal = () => {
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+};
 
 //FETCH
-fetch('./data/index.json')
-.then((res) => res.json())
-.then((jsonResponse) => {
-    teclados = jsonResponse.teclados
-    cargaTeclados();
-})
 
+const fetchFunction = () => {
+  fetch("./data/index.json")
+    .then((res) => res.json())
+    .then((jsonResponse) => {
+      teclados = jsonResponse.teclados;
+      cargaTeclados();
+    });
+};
+fetchFunction();
