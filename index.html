@@ -10,6 +10,7 @@
     />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link
       rel="shortcut icon"
       href="./images/imgSecundarias/keyboard.png"
@@ -18,7 +19,7 @@
     <title>KEYBOARD WORLD</title>
   </head>
   <body>
-    <div class="nav">
+    <div class="nav" id="nav">
       <div class="logoYTitulo">
         <img src="./images/imgSecundarias/extension-manager.png" alt="" />
         <h1>KEYBOARD</h1>
@@ -43,10 +44,23 @@
       <hr class="hr" />
     </div>
 
+    <div class="btnPreciosContainer">
+      <button class="btnPrecios" id="gAlta">Gama Alta</button>
+      <button class="btnPrecios" id="gMedia">Gama Media</button>
+      <button class="btnPrecios" id="gBaja">Gama Baja</button>
+    </div>
+
     <div id="cards" class="cardStyle" data-aos="zoom-in"></div>
 
     <div id="contCarrito" class="contCarritoStyle"></div>
 
+    <div>
+      <a href="#nav"><i class="fa-solid fa-circle-up"></i></a>
+    </div>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://kit.fontawesome.com/ca882e6e2b.js" crossorigin="anonymous"></script>
     <script src="index.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>

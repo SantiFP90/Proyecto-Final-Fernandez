@@ -254,3 +254,34 @@ button:hover::after {
   color: rgb(241, 75, 75);
   font-size: 1.2rem;
 }
+
+/* Flecha subir */
+.fa-circle-up {
+  font-size: 2em;
+  color: black;
+  position: fixed;
+  cursor: pointer;
+  right: 0px;
+  bottom: 0px;
+  margin-bottom: 20px;
+  margin-right: 15px;
+  transition: all 300ms ease;
+}
+.fa-circle-up:hover {
+  transform: scale(1.3);
+}
+@media (max-width: 425px) {
+  .fa-circle-up:hover {
+    font-size: 1.3em;
+  }
+}
+
+/* BOTONES ORDEN DE PRECIOS */
+.btnPreciosContainer{
+  display: flex;
+  justify-content: center;
+}
+.btnPrecios{
+  margin: 5px;
+  width: 300px;
+}
