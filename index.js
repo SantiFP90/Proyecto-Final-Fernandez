@@ -8,37 +8,44 @@ const qFiltros = document.getElementById("qFiltros");
 
 let teclados = [];
 
+//Carrito vacio o del local
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
+//Borrar cards del html
 const borrarProductos = () => {
   contenedorCards.innerHTML = " ";
 };
 
+//Funcion de filtrado teclados gama alta
 const alta = () => {
   teclados = teclados.filter((teclados) => {
     return teclados.gama === "alta";
   });
 };
 
+//Funcion de filtrado teclados gama media
 const media = () => {
   teclados = teclados.filter((teclados) => {
     return teclados.gama === "media";
   });
 };
 
+//Funcion de filtrado teclados gama baja
 const baja = () => {
   teclados = teclados.filter((teclados) => {
     return teclados.gama === "baja";
   });
 };
 
+//Borra los porductos que se encuentren en el html y los vuelve a cargar desde el fetch
 const qFiltro = () => {
   borrarProductos();
   fetchFunction();
 };
-
 qFiltros.addEventListener("click", qFiltro);
 
+
+//Borran los productos del html y cargan los productos correspondientes segun el filtro
 gAlta.addEventListener("click", () => {
   borrarProductos();
   alta();
@@ -56,6 +63,7 @@ gBaja.addEventListener("click", () => {
   baja();
   cargaTeclados();
 });
+
 
 //AGREGAR PRODUCTOS A LA PAGINA
 cargaTeclados = () => {
@@ -115,7 +123,7 @@ const verCarrito = () => {
     contCarrito.style.display = "none";
   });
 
-  //TOTAL
+  //TOTAL DE ARRIBA
   const total = carrito.reduce((acc, el) => acc + el.precio, 0);
   const precioTotal = document.createElement("div");
   precioTotal.classList.add("pTotal");
@@ -127,6 +135,11 @@ const verCarrito = () => {
 
   //AGREGAR HEADER AL CONTENEDOR
   contCarrito.append(carritoCargadoHeader);
+
+  //CONTADOR DE PRODUCTOS 
+  let cantidadProductos = document.createElement("p");
+  cantidadProductos.innerText = `Cantidad de productos: ${carrito.length}`;
+  contCarrito.append(cantidadProductos);
 
   //CARGA DE LOS PRODUCTOS
   carrito.forEach((teclado) => {
@@ -157,14 +170,12 @@ const verCarrito = () => {
           background: "rgba(205, 52, 52, 0.558)",
         },
       }).showToast();
-      let cantidadProductos = document.createElement("p");
-      cantidadProductos.innerText = `Cantidad de productos: ${carrito.length}`;
-      contCarrito.append(cantidadProductos);
       estaVacio();
     });
 
     //AGREGAR PRODUCTOS AL CONTENEDOR
     contCarrito.append(carritoTeclados);
+
   });
 
   //TOTAL DEBAJO
@@ -200,41 +211,62 @@ const verCarrito = () => {
   contCarrito.append(vaciar);
 };
 
+//VISUALIZAR EL CARRITO 
 carritoCompras.addEventListener("click", verCarrito);
 
+//Funcion para eliminar producto del carrito
 const eliminarProducto = (id) => {
   const eProducto = carrito.find((teclado) => teclado.id === id);
 
   carrito = carrito.filter((carritoFiltrado) => {
     return carritoFiltrado !== eProducto;
   });
+
   guardarEnLocal();
   verCarrito();
+
 };
 
+//Funcion para vaciar producto del carrito
 const vaciarCarrito = () => {
   carrito.splice(0, carrito.length);
   localStorage.removeItem("carrito");
   verCarrito();
 };
 
+//Funcion para que al quitar todos los productos se cierre el carrito e informe que esta vacio 
 const estaVacio = () => {
   if (carrito.length === 0) {
     vaciarCarrito();
     contCarrito.style.display = "none";
+    Toastify({
+      text: "Carrito vacio! :(",
+      duration: 3000,
+      gravity: "bottom",
+      position: "left",
+      style: {
+        background: "rgba(205, 52, 52, 0.558)",
+      },
+    }).showToast();
   } else {
-    console.log("xd");
-    cantidadProductos.classList.add("cantidadProductosStyle");
+    Toastify({
+      text: ` Productos restantes: ${carrito.length} `,
+      duration: 3000,
+      gravity: "bottom",
+      position: "left",
+      style: {
+        background: "rgba(52, 205, 52, 0.558)",
+      },
+    }).showToast();
   }
 };
 
-//LocalStorage
+//LocalStorage guardar productos del carrito
 const guardarEnLocal = () => {
   localStorage.setItem("carrito", JSON.stringify(carrito));
 };
 
 //FETCH
-
 const fetchFunction = () => {
   fetch("./data/index.json")
     .then((res) => res.json())

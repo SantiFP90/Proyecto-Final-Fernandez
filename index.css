@@ -20,16 +20,27 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.nav a h1{
+  color: black;
+}
+
 .nav h2 {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
   font-weight: bold;
   font-size: 2rem;
   margin-left: 5px;
   color: #d891a9;
+  margin: 5px;
 }
 .nav img {
   height: 50px;
   margin-right: 10px;
+}
+
+a{
+  text-decoration: none;
+  color: #4e3d61;
 }
 
 /* Header y portada */
@@ -212,6 +223,7 @@ button:hover::after {
 
 /* CARRITO COMPRAS ESTILO */
 /* ESTILOS DEL img CARRITO */
+
 .carritoComprasStyle {
   cursor: pointer;
 }
@@ -280,7 +292,7 @@ button:hover::after {
   }
 }
 
-/* BOTONES ORDEN DE PRECIOS */
+/* BOTONES ORDEN DE GAMAS */
 .btnPreciosContainer {
   display: flex;
   justify-content: center;
@@ -289,7 +301,6 @@ button:hover::after {
   margin: 5px;
   width: 300px;
 }
-
 .btnFiltros {
   margin: 5px;
   width: 300px;
