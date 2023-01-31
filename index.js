@@ -16,6 +16,7 @@ const borrarProductos = () => {
   contenedorCards.innerHTML = " ";
 };
 
+
 //Funcion de filtrado teclados gama alta
 const alta = () => {
   teclados = teclados.filter((teclados) => {
